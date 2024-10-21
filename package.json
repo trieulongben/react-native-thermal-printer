@@ -1,9 +1,9 @@
 {
   "name": "react-native-thermal-receipt-printer-sync",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "Fork of react-native-thermal-receipt-printer. A React Native Library to support USB/BLE/Net printer",
-  "main": "index.ts",
-  "source": "index.ts",
+  "main": "dist/index.js",
+  "source": "dist/index.js",
   "scripts": {
     "pods": "cd example && pod-install --quiet",
     "example": "yarn --cwd example",
