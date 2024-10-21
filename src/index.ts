@@ -352,7 +352,7 @@ const BLEPrinter = {
       RNBLEPrinter.printRawData(
         processedText.text,
         processedText.opts,
-        function (error) {
+        function (error:Error) {
           return throwError(error);
         }
       );
