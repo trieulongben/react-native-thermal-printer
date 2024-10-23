@@ -66,6 +66,11 @@ public class RNNetPrinterModule extends ReactContextBaseJavaModule implements RN
         adapter.printRawData(base64Data, errorCallback);
     }
 
+    @Override
+    public boolean isConnected() {
+        return adapter.checkConnectionStatus();
+    }
+
     @ReactMethod
     @Override
     public void printImageData(String imageUrl, int imageWidth, int imageHeight, Callback errorCallback) {

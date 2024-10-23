@@ -186,6 +186,13 @@ public class BLEPrinterAdapter implements PrinterAdapter{
     }
 
     @Override
+    public boolean checkConnectionStatus() {
+        if(this.mBluetoothSocket ==null) return false;
+        if(this.mBluetoothDevice ==null) return  false;
+        return this.mBluetoothSocket.isConnected();
+    }
+
+    @Override
     public void printRawData(String rawBase64Data, Callback errorCallback) {
         if(this.mBluetoothSocket == null){
             errorCallback.invoke("bluetooth connection is not built, may be you forgot to connectPrinter");

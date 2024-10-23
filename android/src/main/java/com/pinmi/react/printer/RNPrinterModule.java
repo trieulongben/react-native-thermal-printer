@@ -18,6 +18,9 @@ public interface RNPrinterModule {
     public void printRawData(String base64Data, Callback errorCallback) ;
 
     @ReactMethod
+    public boolean isConnected();
+
+    @ReactMethod
     public void printImageData(String imageUrl, int imageWidth, int imageHeight, Callback errorCallback);
 
     @ReactMethod

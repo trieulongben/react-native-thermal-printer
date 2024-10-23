@@ -112,7 +112,7 @@ const textPreprocessingIOS = (text: string, canCut = true, beep = true) => {
 // };
 
 const throwError=(error:Error)=>{
-  throw error
+   console.error(error)
 }
 
 const USBPrinter = {
@@ -147,6 +147,10 @@ const USBPrinter = {
       RNUSBPrinter.closeConn();
       resolve();
     }),
+
+    isConnected:()=>{
+      return RNUSBPrinter.isConnected();
+    },
 
   printText: (text: string, opts: PrinterOptions = {}): void =>
     RNUSBPrinter.printRawData(textTo64Buffer(text, opts), (error: Error) =>
@@ -261,16 +265,21 @@ const BLEPrinter = {
       resolve();
     }),
 
+    isConnected:()=>{
+      return RNBLEPrinter.isConnected();
+    },
+
+
   printText: (text: string, opts: PrinterOptions = {}): void => {
     if (Platform.OS === "ios") {
       const processedText = textPreprocessingIOS(text, false, false);
-      RNBLEPrinter.printRawData(
+   return   RNBLEPrinter.printRawData(
         processedText.text,
         processedText.opts,
         (error: Error) => throwError(error)
       );
     } else {
-      RNBLEPrinter.printRawData(textTo64Buffer(text, opts), (error: Error) =>
+    return  RNBLEPrinter.printRawData(textTo64Buffer(text, opts), (error: Error) =>
         throwError(error)
       );
     }
@@ -283,13 +292,13 @@ const BLEPrinter = {
         opts?.cut ?? true,
         opts.beep ?? true
       );
-      RNBLEPrinter.printRawData(
+   return   RNBLEPrinter.printRawData(
         processedText.text,
         processedText.opts,
         (error: Error) => throwError(error)
       );
     } else {
-      RNBLEPrinter.printRawData(billTo64Buffer(text, opts), (error: Error) =>
+   return   RNBLEPrinter.printRawData(billTo64Buffer(text, opts), (error: Error) =>
         throwError(error)
       );
     }
@@ -349,7 +358,7 @@ const BLEPrinter = {
     if (Platform.OS === "ios") {
       var processedText = textPreprocessingIOS(text, false, false);
 
-      RNBLEPrinter.printRawData(
+    return  RNBLEPrinter.printRawData(
         processedText.text,
         processedText.opts,
         function (error:Error) {
@@ -357,7 +366,7 @@ const BLEPrinter = {
         }
       );
     } else {
-      RNBLEPrinter.printRawData(text, (error: Error) => throwError(error));
+     return RNBLEPrinter.printRawData(text, (error: Error) => throwError(error));
     }
   },
   /**
@@ -401,7 +410,9 @@ const NetPrinter = {
         (error: Error) => reject(error)
       )
     ),
-
+    isConnected:()=>{
+      return RNNetPrinter.isConnected();
+    },
   getDeviceList: (): Promise<INetPrinter[]> =>
     new Promise((resolve, reject) =>
       RNNetPrinter.getDeviceList(

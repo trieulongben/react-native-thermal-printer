@@ -212,6 +212,15 @@ public class NetPrinterAdapter implements PrinterAdapter {
     }
 
     @Override
+    public boolean checkConnectionStatus() {
+        if(this.mSocket==null) return false;
+        if(this.mSocket.isClosed()) return false;
+        if(this.mSocket.isOutputShutdown())  return false;
+        if(this.mSocket.isInputShutdown()) return false;
+        return this.mSocket.isConnected();
+    }
+
+    @Override
     public void printRawData(String rawBase64Data, Callback errorCallback) {
         if (this.mSocket == null) {
             errorCallback.invoke("Net connection is not built, may be you forgot to connectPrinter");

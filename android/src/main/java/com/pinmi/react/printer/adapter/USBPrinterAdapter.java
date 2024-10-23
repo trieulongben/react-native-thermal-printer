@@ -128,6 +128,11 @@ public class USBPrinterAdapter implements PrinterAdapter {
         }
     }
 
+    @Override
+    public boolean checkConnectionStatus() {
+        return this.mUsbDeviceConnection != null;
+    }
+
     public List<PrinterDevice> getDeviceList(Callback errorCallback) {
         List<PrinterDevice> lists = new ArrayList<>();
         if (mUSBManager == null) {
