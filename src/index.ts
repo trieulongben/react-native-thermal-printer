@@ -148,8 +148,13 @@ const USBPrinter = {
       resolve();
     }),
 
-    isConnected:()=>{
-      return RNUSBPrinter.isConnected();
+    isConnected:():Promise<boolean>=>{
+      return new Promise((resolve,reject)=>{
+        return RNUSBPrinter.isConnected(
+          (isConnected: boolean) => resolve(isConnected),
+          (error: Error) => reject(error)
+        )
+      })
     },
 
   printText: (text: string, opts: PrinterOptions = {}): void =>

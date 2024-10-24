@@ -75,8 +75,8 @@ public class RNBLEPrinterModule extends ReactContextBaseJavaModule implements RN
 
     @ReactMethod
     @Override
-    public boolean isConnected() {
-        return this.adapter.checkConnectionStatus();
+    public void isConnected(Callback successCallback, Callback errorCallback) {
+        successCallback.invoke(this.adapter.checkConnectionStatus());
     }
 
     @ReactMethod
