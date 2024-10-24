@@ -136,7 +136,9 @@ var USBPrinter = {
         });
     },
     isConnected: function () {
-        return RNUSBPrinter.isConnected();
+        return new Promise(function (resolve, reject) {
+            return RNUSBPrinter.isConnected(function (isConnected) { return resolve(isConnected); }, function (error) { return reject(error); });
+        });
     },
     printText: function (text, opts) {
         if (opts === void 0) { opts = {}; }
