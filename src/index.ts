@@ -157,31 +157,31 @@ const USBPrinter = {
       })
     },
 
-  printText: (text: string, opts: PrinterOptions = {}): void =>
+  printText: (text: string, opts: PrinterOptions = {},errorCallBack:(error:Error)=>void): void =>
     RNUSBPrinter.printRawData(textTo64Buffer(text, opts), (error: Error) =>
-      throwError(error)
+      errorCallBack(error)
     ),
 
-  printBill: (text: string, opts: PrinterOptions = {}): void =>
+  printBill: (text: string, opts: PrinterOptions = {},errorCallBack:(error:Error)=>void): void =>
     RNUSBPrinter.printRawData(billTo64Buffer(text, opts), (error: Error) =>
-      throwError(error)
+      errorCallBack(error)
     ),
   /**
    * image url
    * @param imgUrl
    * @param opts
    */
-  printImage: function (imgUrl: string, opts: PrinterImageOptions = {}) {
+  printImage: function (imgUrl: string, opts: PrinterImageOptions = {},errorCallBack:(error:Error)=>void) {
     if (Platform.OS === "ios") {
       RNUSBPrinter.printImageData(imgUrl, opts, (error: Error) =>
-        throwError(error)
+        errorCallBack(error)
       );
     } else {
       RNUSBPrinter.printImageData(
         imgUrl,
         opts?.imageWidth ?? 0,
         opts?.imageHeight ?? 0,
-        (error: Error) => throwError(error)
+        (error: Error) => errorCallBack(error)
       );
     }
   },
@@ -190,17 +190,17 @@ const USBPrinter = {
    * @param Base64
    * @param opts
    */
-  printImageBase64: function (Base64: string, opts: PrinterImageOptions = {}) {
+  printImageBase64: function (Base64: string, opts: PrinterImageOptions = {},errorCallBack:(error:Error)=>void) {
     if (Platform.OS === "ios") {
       RNUSBPrinter.printImageBase64(Base64, opts, (error: Error) =>
-        throwError(error)
+        errorCallBack(error)
       );
     } else {
       RNUSBPrinter.printImageBase64(
         Base64,
         opts?.imageWidth ?? 0,
         opts?.imageHeight ?? 0,
-        (error: Error) => throwError(error)
+        (error: Error) => errorCallBack(error)
       );
     }
   },
@@ -208,10 +208,10 @@ const USBPrinter = {
    * android print with encoder
    * @param text
    */
-  printRaw: (text: string): void => {
+  printRaw: (text: string,errorCallBack:(error:Error)=>void): void => {
     if (Platform.OS === "ios") {
     } else {
-      RNUSBPrinter.printRawData(text, (error: Error) => throwError(error));
+      RNUSBPrinter.printRawData(text, (error: Error) => errorCallBack(error));
     }
   },
   /**
@@ -225,6 +225,7 @@ const USBPrinter = {
     columnAlignment: ColumnAlignment[],
     columnStyle: string[],
     opts: PrinterOptions = {}
+    ,errorCallBack:(error:Error)=>void
   ): void => {
     const result = processColumnText(
       texts,
@@ -233,7 +234,7 @@ const USBPrinter = {
       columnStyle
     );
     RNUSBPrinter.printRawData(textTo64Buffer(result, opts), (error: Error) =>
-      throwError(error)
+      errorCallBack(error)
     );
   },
 };

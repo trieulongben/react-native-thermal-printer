@@ -44,31 +44,31 @@ declare const USBPrinter: {
     connectPrinter: (vendorId: string, productId: string) => Promise<IUSBPrinter>;
     closeConn: () => Promise<void>;
     isConnected: () => Promise<boolean>;
-    printText: (text: string, opts?: PrinterOptions) => void;
-    printBill: (text: string, opts?: PrinterOptions) => void;
+    printText: (text: string, opts: PrinterOptions | undefined, errorCallBack: (error: Error) => void) => void;
+    printBill: (text: string, opts: PrinterOptions | undefined, errorCallBack: (error: Error) => void) => void;
     /**
      * image url
      * @param imgUrl
      * @param opts
      */
-    printImage: (imgUrl: string, opts?: PrinterImageOptions) => void;
+    printImage: (imgUrl: string, opts: PrinterImageOptions | undefined, errorCallBack: (error: Error) => void) => void;
     /**
      * base 64 string
      * @param Base64
      * @param opts
      */
-    printImageBase64: (Base64: string, opts?: PrinterImageOptions) => void;
+    printImageBase64: (Base64: string, opts: PrinterImageOptions | undefined, errorCallBack: (error: Error) => void) => void;
     /**
      * android print with encoder
      * @param text
      */
-    printRaw: (text: string) => void;
+    printRaw: (text: string, errorCallBack: (error: Error) => void) => void;
     /**
      * `columnWidth`
      * 80mm => 46 character
      * 58mm => 30 character
      */
-    printColumnsText: (texts: string[], columnWidth: number[], columnAlignment: ColumnAlignment[], columnStyle: string[], opts?: PrinterOptions) => void;
+    printColumnsText: (texts: string[], columnWidth: number[], columnAlignment: ColumnAlignment[], columnStyle: string[], opts: PrinterOptions | undefined, errorCallBack: (error: Error) => void) => void;
 };
 declare const BLEPrinter: {
     init: () => Promise<void>;

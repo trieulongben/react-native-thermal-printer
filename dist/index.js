@@ -140,16 +140,16 @@ var USBPrinter = {
             return RNUSBPrinter.isConnected(function (isConnected) { return resolve(isConnected); }, function (error) { return reject(error); });
         });
     },
-    printText: function (text, opts) {
+    printText: function (text, opts, errorCallBack) {
         if (opts === void 0) { opts = {}; }
         return RNUSBPrinter.printRawData(textTo64Buffer(text, opts), function (error) {
-            return throwError(error);
+            return errorCallBack(error);
         });
     },
-    printBill: function (text, opts) {
+    printBill: function (text, opts, errorCallBack) {
         if (opts === void 0) { opts = {}; }
         return RNUSBPrinter.printRawData(billTo64Buffer(text, opts), function (error) {
-            return throwError(error);
+            return errorCallBack(error);
         });
     },
     /**
@@ -157,16 +157,16 @@ var USBPrinter = {
      * @param imgUrl
      * @param opts
      */
-    printImage: function (imgUrl, opts) {
+    printImage: function (imgUrl, opts, errorCallBack) {
         var _a, _b;
         if (opts === void 0) { opts = {}; }
         if (Platform.OS === "ios") {
             RNUSBPrinter.printImageData(imgUrl, opts, function (error) {
-                return throwError(error);
+                return errorCallBack(error);
             });
         }
         else {
-            RNUSBPrinter.printImageData(imgUrl, (_a = opts === null || opts === void 0 ? void 0 : opts.imageWidth) !== null && _a !== void 0 ? _a : 0, (_b = opts === null || opts === void 0 ? void 0 : opts.imageHeight) !== null && _b !== void 0 ? _b : 0, function (error) { return throwError(error); });
+            RNUSBPrinter.printImageData(imgUrl, (_a = opts === null || opts === void 0 ? void 0 : opts.imageWidth) !== null && _a !== void 0 ? _a : 0, (_b = opts === null || opts === void 0 ? void 0 : opts.imageHeight) !== null && _b !== void 0 ? _b : 0, function (error) { return errorCallBack(error); });
         }
     },
     /**
@@ -174,27 +174,27 @@ var USBPrinter = {
      * @param Base64
      * @param opts
      */
-    printImageBase64: function (Base64, opts) {
+    printImageBase64: function (Base64, opts, errorCallBack) {
         var _a, _b;
         if (opts === void 0) { opts = {}; }
         if (Platform.OS === "ios") {
             RNUSBPrinter.printImageBase64(Base64, opts, function (error) {
-                return throwError(error);
+                return errorCallBack(error);
             });
         }
         else {
-            RNUSBPrinter.printImageBase64(Base64, (_a = opts === null || opts === void 0 ? void 0 : opts.imageWidth) !== null && _a !== void 0 ? _a : 0, (_b = opts === null || opts === void 0 ? void 0 : opts.imageHeight) !== null && _b !== void 0 ? _b : 0, function (error) { return throwError(error); });
+            RNUSBPrinter.printImageBase64(Base64, (_a = opts === null || opts === void 0 ? void 0 : opts.imageWidth) !== null && _a !== void 0 ? _a : 0, (_b = opts === null || opts === void 0 ? void 0 : opts.imageHeight) !== null && _b !== void 0 ? _b : 0, function (error) { return errorCallBack(error); });
         }
     },
     /**
      * android print with encoder
      * @param text
      */
-    printRaw: function (text) {
+    printRaw: function (text, errorCallBack) {
         if (Platform.OS === "ios") {
         }
         else {
-            RNUSBPrinter.printRawData(text, function (error) { return throwError(error); });
+            RNUSBPrinter.printRawData(text, function (error) { return errorCallBack(error); });
         }
     },
     /**
@@ -202,11 +202,11 @@ var USBPrinter = {
      * 80mm => 46 character
      * 58mm => 30 character
      */
-    printColumnsText: function (texts, columnWidth, columnAlignment, columnStyle, opts) {
+    printColumnsText: function (texts, columnWidth, columnAlignment, columnStyle, opts, errorCallBack) {
         if (opts === void 0) { opts = {}; }
         var result = processColumnText(texts, columnWidth, columnAlignment, columnStyle);
         RNUSBPrinter.printRawData(textTo64Buffer(result, opts), function (error) {
-            return throwError(error);
+            return errorCallBack(error);
         });
     },
 };
